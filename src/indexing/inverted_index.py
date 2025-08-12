@@ -8,13 +8,16 @@ class InvertedIndex:
         self.index = defaultdict(lambda: defaultdict(list))  # token → {doc_id: [positions]}
         self.documents = {}  # doc_id → original text
 
-    def tokenize(self, text):
+    def tokenize(self, text: str) -> list:
         # Simple tokenizer: lowercase, split on non-alphanumeric
         return re.findall(r'\w+', text.lower())
 
     def add_document(self, doc_id, text):
         self.documents[doc_id] = text
         tokens = self.tokenize(text)
+        
+        print("Adding document:", doc_id, "with tokens:", tokens)
+
         for pos, token in enumerate(tokens):
             self.index[token][doc_id].append(pos)
 
